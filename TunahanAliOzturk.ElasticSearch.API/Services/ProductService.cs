@@ -1,6 +1,7 @@
 ﻿using System.Collections.Immutable;
 using System.Net;
 using TunahanAliOzturk.ElasticSearch.API.DTOs;
+using TunahanAliOzturk.ElasticSearch.API.Models;
 using TunahanAliOzturk.ElasticSearch.API.Repositories;
 
 namespace TunahanAliOzturk.ElasticSearch.API.Services
@@ -32,18 +33,41 @@ namespace TunahanAliOzturk.ElasticSearch.API.Services
             var products = await _repository.GetAllAsync();
 
             var productListDto = new List<ProductDto>();
-            //var productListDto = products.Select(x => new ProductDto(x.Id, x.Name, x.Price, x.Stock, new ProductFeatureDto(x.Feature.Width, x.Feature.Height, x.Feature.Color))).ToList();
-
+            
             foreach (var item in products)
             {
                 if (item.Feature is null)
                 {
                     productListDto.Add(new ProductDto(item.Id,item.Name,item.Price,item.Stock, null));
+                    continue;
                 }
-                productListDto.Add(new ProductDto(item.Id, item.Name, item.Price, item.Stock, new ProductFeatureDto(item.Feature.Width, item.Feature.Height, item.Feature.Color)));
+                productListDto.Add(new ProductDto(item.Id, item.Name, item.Price, item.Stock, new ProductFeatureDto(item.Feature.Width, item.Feature.Height, item.Feature.Color.ToString())));
             }
 
             return ResponseDto<List<ProductDto>>.Success(productListDto, HttpStatusCode.OK);
         }
+
+        public async Task<ResponseDto<ProductDto>> GetByIdAsync(string id)
+        {
+
+            var hasProduct = await _repository.GetByIdAsync(id);
+            if (hasProduct == null)
+            {
+                return ResponseDto<ProductDto>.Fail("Product not found.",HttpStatusCode.NotFound);
+            }
+            return ResponseDto<ProductDto>.Success(hasProduct.CreateDto(), HttpStatusCode.OK);
+
+        }
+        public async Task<ResponseDto<bool>> UpdateAsync(ProductUpdateDto productUpdateDto)
+        {
+            var isSuccess = await _repository.UpdateAsync(productUpdateDto);
+
+            if (!isSuccess)
+            {
+                return ResponseDto<bool>.Fail("Something goes wrong.", HttpStatusCode.NotFound);
+            }
+            return ResponseDto<bool>.Success(true, HttpStatusCode.NoContent);
+        }
+
     }
 }

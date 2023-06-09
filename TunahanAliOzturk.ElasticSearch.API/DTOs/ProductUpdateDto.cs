@@ -2,8 +2,8 @@
 
 namespace TunahanAliOzturk.ElasticSearch.API.DTOs
 {
-    public record ProductFeatureDto(int Width, int Height, string Color)
+    public record ProductUpdateDto(string Id,string Name, decimal Price, int Stock, ProductFeatureDto Feature)
     {
-
+       
     }
 }

@@ -25,5 +25,14 @@ namespace TunahanAliOzturk.ElasticSearch.API.DTOs
             };
         }
 
+        public static ResponseDto<T> Fail(string error, HttpStatusCode code)
+        {
+            return new ResponseDto<T>
+            {
+                Errors = new List<string> { error },
+                StatusCode = code
+            };
+        }
+
     }
 }

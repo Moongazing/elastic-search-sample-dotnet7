@@ -24,5 +24,16 @@ namespace TunahanAliOzturk.ElasticSearch.API.Controllers
         {
             return CreateActionResult(await _service.GetAllAsync());
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(string id)
+        {
+            return CreateActionResult(await _service.GetByIdAsync(id));
+
+        }
+        [HttpPut]
+        public async Task<IActionResult> Update(ProductUpdateDto productUpdateDto)
+        {
+            return CreateActionResult(await _service.UpdateAsync(productUpdateDto));
+        }
     }
 }
