@@ -52,7 +52,13 @@ namespace TunahanAliOzturk.ElasticSearch.API.Repositories
         }
         public async Task<bool> UpdateAsync(ProductUpdateDto productUpdateDto)
         {
-            var response = await _client.UpdateAsync<Product,ProductUpdateDto>(productUpdateDto.Id,x=>x.Index(indexName).Doc(productUpdateDto));
+            var response = await _client.UpdateAsync<Product, ProductUpdateDto>(productUpdateDto.Id, x => x.Index(indexName).Doc(productUpdateDto));
+
+            return response.IsValid;
+        }
+        public async Task<bool> DeleteAsync(string id)
+        {
+            var response = await _client.DeleteAsync<Product>(id, x => x.Index(indexName));
 
             return response.IsValid;
         }

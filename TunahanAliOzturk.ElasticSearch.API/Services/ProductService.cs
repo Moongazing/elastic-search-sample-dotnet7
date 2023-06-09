@@ -68,6 +68,16 @@ namespace TunahanAliOzturk.ElasticSearch.API.Services
             }
             return ResponseDto<bool>.Success(true, HttpStatusCode.NoContent);
         }
+        public async Task<ResponseDto<bool>> DeleteAsync(string id)
+        {
+            var isSuccess = await _repository.DeleteAsync(id);
+
+            if (!isSuccess)
+            {
+                return ResponseDto<bool>.Fail("Something goes wrong.", HttpStatusCode.NotFound);
+            }
+            return ResponseDto<bool>.Success(true, HttpStatusCode.NoContent);
+        }
 
     }
 }

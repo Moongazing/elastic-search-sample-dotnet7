@@ -31,9 +31,14 @@ namespace TunahanAliOzturk.ElasticSearch.API.Controllers
 
         }
         [HttpPut]
-        public async Task<IActionResult> Update(ProductUpdateDto productUpdateDto)
+        public async Task<IActionResult> UpdateAsync(ProductUpdateDto productUpdateDto)
         {
             return CreateActionResult(await _service.UpdateAsync(productUpdateDto));
+        }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAsync(string id)
+        {
+            return CreateActionResult(await _service.DeleteAsync(id));
         }
     }
 }
