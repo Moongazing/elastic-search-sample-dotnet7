@@ -1,5 +1,7 @@
 
 using TunahanAliOzturk.ElasticSearch.API.Extensions.ElasticSearch;
+using TunahanAliOzturk.ElasticSearch.API.Repositories;
+using TunahanAliOzturk.ElasticSearch.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddElasticService(builder.Configuration);
 
+builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<ProductRepository>();
 
 var app = builder.Build();
 
