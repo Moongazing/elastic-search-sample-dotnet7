@@ -1,11 +1,9 @@
-﻿using Nest;
-using TunahanAliOzturk.ElasticSearch.API.DTOs;
+﻿using TunahanAliOzturk.ElasticSearch.API.DTOs;
 
 namespace TunahanAliOzturk.ElasticSearch.API.Models
 {
     public class Product
     {
-        [PropertyName("_id")]
         public string Id { get; set; } = null!;
         public string Name { get; set; } = null!;
         public decimal Price { get; set; }

@@ -1,4 +1,4 @@
-﻿using Nest;
+﻿
 using TunahanAliOzturk.ElasticSearch.API.Models;
 
 namespace TunahanAliOzturk.ElasticSearch.API.DTOs

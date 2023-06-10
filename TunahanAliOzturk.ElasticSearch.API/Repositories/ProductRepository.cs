@@ -1,4 +1,5 @@
-﻿using Nest;
+﻿
+using Elastic.Clients.Elasticsearch;
 using System.Collections.Immutable;
 using TunahanAliOzturk.ElasticSearch.API.DTOs;
 using TunahanAliOzturk.ElasticSearch.API.Models;
@@ -7,9 +8,9 @@ namespace TunahanAliOzturk.ElasticSearch.API.Repositories
 {
     public class ProductRepository
     {
-        private readonly ElasticClient _client;
+        private readonly ElasticsearchClient _client;
         private const string indexName = "products";
-        public ProductRepository(ElasticClient client)
+        public ProductRepository(ElasticsearchClient client)
         {
             _client = client;
         }
@@ -19,7 +20,7 @@ namespace TunahanAliOzturk.ElasticSearch.API.Repositories
 
             var response = await _client.IndexAsync(product, x => x.Index(indexName).Id(Guid.NewGuid().ToString()));
 
-            if (!response.IsValid)
+            if (!response.IsSuccess())
             {
                 return null;
             }
@@ -42,7 +43,7 @@ namespace TunahanAliOzturk.ElasticSearch.API.Repositories
         public async Task<Product> GetByIdAsync(string id)
         {
             var response = await _client.GetAsync<Product>(id, x => x.Index(indexName));
-            if (!response.IsValid)
+            if (!response.IsSuccess())
             {
                 return null;
             }
@@ -52,15 +53,15 @@ namespace TunahanAliOzturk.ElasticSearch.API.Repositories
         }
         public async Task<bool> UpdateAsync(ProductUpdateDto productUpdateDto)
         {
-            var response = await _client.UpdateAsync<Product, ProductUpdateDto>(productUpdateDto.Id, x => x.Index(indexName).Doc(productUpdateDto));
+            var response = await _client.UpdateAsync<Product, ProductUpdateDto>(indexName,productUpdateDto.Id, x=>x.Doc(productUpdateDto));
 
-            return response.IsValid;
+            return response.IsSuccess();
         }
         public async Task<bool> DeleteAsync(string id)
         {
             var response = await _client.DeleteAsync<Product>(id, x => x.Index(indexName));
 
-            return response.IsValid;
+            return response.IsSuccess();
         }
     }
 }
