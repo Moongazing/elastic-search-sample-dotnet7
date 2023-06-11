@@ -15,6 +15,10 @@ builder.Services.AddElasticService(builder.Configuration);
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<ProductRepository>();
 
+
+builder.Services.AddScoped<EComerceService>();
+builder.Services.AddScoped<ECommerceRepossitory>();
+
 var app = builder.Build();
 
 
