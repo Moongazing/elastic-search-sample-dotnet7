@@ -31,7 +31,19 @@ namespace TunahanAliOzturk.ElasticSearch.API.Controllers
 
             return Ok(result);
         }
-            
+        [HttpGet("RangeLevelQuery")]
+        public async Task<IActionResult> RangeLevelQuery(double minPrice,double maxPrice)
+        {
+            var result = await _service.RangeLevelQueryAsync(minPrice, maxPrice);
+            return Ok(result);
+        }
+        [HttpGet("RangeLevelQueryForDate")]
+        public async Task<IActionResult> RangeLevelQueryForDate(DateTime minDate, DateTime maxDate)
+        {
+            var result = await _service.RangeLevelQueryForDateAsync(minDate, maxDate);
+            return Ok(result);
+        }
+
 
 
 

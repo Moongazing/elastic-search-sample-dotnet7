@@ -35,7 +35,7 @@ namespace TunahanAliOzturk.ElasticSearch.API.Repositories
 
             foreach (var hit in result.Hits)
             {
-                hit.Source.Id = hit.Id;
+                hit.Source!.Id = hit.Id;
             }
 
             return result.Documents.ToImmutableList();
@@ -45,10 +45,10 @@ namespace TunahanAliOzturk.ElasticSearch.API.Repositories
             var response = await _client.GetAsync<Product>(id, x => x.Index(indexName));
             if (!response.IsSuccess())
             {
-                return null;
+                return null!;
             }
 
-            response.Source.Id = response.Id;
+            response.Source!.Id = response.Id;
             return response.Source;
         }
         public async Task<bool> UpdateAsync(ProductUpdateDto productUpdateDto)

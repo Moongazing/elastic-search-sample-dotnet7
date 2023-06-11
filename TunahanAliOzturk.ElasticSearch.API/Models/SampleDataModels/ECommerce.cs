@@ -16,6 +16,9 @@ namespace TunahanAliOzturk.ElasticSearch.API.Models.SampleDataModels
         [JsonPropertyName("customer_full_name")]
         public string CustomerFullName { get; set; } = null!;
 
+        [JsonPropertyName("taxful_total_price")]
+        public double TaxfulTotalPrice { get; set; }
+
         [JsonPropertyName("category")]
         public string[] Category { get; set; } = null!;
 
@@ -26,6 +29,6 @@ namespace TunahanAliOzturk.ElasticSearch.API.Models.SampleDataModels
         public DateTime OrderDate { get; set; }
         [JsonPropertyName("products")]
 
-        public EProduct[] Products { get; set; }
+        public EProduct[] Products { get; set; } = null!;
     }
 }

@@ -38,7 +38,7 @@ namespace TunahanAliOzturk.ElasticSearch.API.Services
             {
                 if (item.Feature is null)
                 {
-                    productListDto.Add(new ProductDto(item.Id,item.Name,item.Price,item.Stock, null));
+                    productListDto.Add(new ProductDto(item.Id,item.Name,item.Price,item.Stock, null!));
                     continue;
                 }
                 productListDto.Add(new ProductDto(item.Id, item.Name, item.Price, item.Stock, new ProductFeatureDto(item.Feature.Width, item.Feature.Height, item.Feature.Color.ToString())));

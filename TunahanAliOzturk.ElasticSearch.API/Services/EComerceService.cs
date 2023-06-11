@@ -23,5 +23,13 @@ namespace TunahanAliOzturk.ElasticSearch.API.Services
         {
             return await _repository.PrefixLevelQueryAsync(customerFirstName);
         }
+        public async Task<ImmutableList<ECommerce>> RangeLevelQueryAsync(double minPrice,double maxPrice)
+        {
+            return await _repository.RangeLevelQueryAsync(minPrice,maxPrice);
+        }
+        public async Task<ImmutableList<ECommerce>> RangeLevelQueryForDateAsync(DateTime minDate, DateTime maxDate)
+        {
+            return await _repository.RangeLevelQueryForDateAsync(minDate, maxDate);
+        }
     }
 }
