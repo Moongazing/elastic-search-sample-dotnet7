@@ -7,6 +7,6 @@ namespace TunahanAliOzturk.ElasticSearch.API.Models.SampleDataModels
         [JsonPropertyName("product_id")]
         public long ProductId { get; set; }
         [JsonPropertyName("product_name")]
-        public string ProductName { get; set; }
+        public string ProductName { get; set; } = null!;
     }
 }

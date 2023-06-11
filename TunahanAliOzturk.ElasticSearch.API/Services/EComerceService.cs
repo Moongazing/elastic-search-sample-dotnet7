@@ -15,11 +15,13 @@ namespace TunahanAliOzturk.ElasticSearch.API.Services
             _repository = repository;
         }
 
-        public async Task<ImmutableList<ECommerce>> TermLevelQuery(string customerFirstName)
+        public async Task<ImmutableList<ECommerce>> TermLevelQueryAsync(string customerFirstName)
         {
-            return await _repository.TermLevelQuery(customerFirstName);
-
-            
+            return await _repository.TermLevelQueryAsync(customerFirstName);    
+        }
+        public async Task<ImmutableList<ECommerce>> PrefixLevelQueryAsync(string customerFirstName)
+        {
+            return await _repository.PrefixLevelQueryAsync(customerFirstName);
         }
     }
 }

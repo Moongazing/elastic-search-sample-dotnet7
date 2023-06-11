@@ -15,7 +15,7 @@ namespace TunahanAliOzturk.ElasticSearch.API.Repositories
             _client = client;
         }
 
-        public async Task<ImmutableList<ECommerce>>TermLevelQuery(string customerFirstName)
+        public async Task<ImmutableList<ECommerce>>TermLevelQueryAsync(string customerFirstName)
         {
             // var result = await _client.SearchAsync<ECommerce>(x =>x.Index(indexName).Query(q => q.Term(t => t.Field("customer_first_name.keyword").Value(customerFirstName))));
 
@@ -28,5 +28,18 @@ namespace TunahanAliOzturk.ElasticSearch.API.Repositories
 
             return result.Documents.ToImmutableList();
         }
+        public async Task<ImmutableList<ECommerce>> PrefixLevelQueryAsync(string customerFullName) //Like startswith
+        {
+            var result = await _client.SearchAsync<ECommerce>(s => s.Index(indexName).Query(q => q.Prefix(p => p.Field(f => f.CustomerFirstName.Suffix("keyword")).Value(customerFullName))));
+
+            foreach (var hit in result.Hits)
+            {
+                hit.Source.Id = hit.Id;
+            }
+
+            return result.Documents.ToImmutableList();
+        }
+       
+
     }
 }
