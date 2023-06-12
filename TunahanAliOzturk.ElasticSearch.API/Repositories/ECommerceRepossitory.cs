@@ -165,5 +165,24 @@ namespace TunahanAliOzturk.ElasticSearch.API.Repositories
             }).ToImmutableList();
         }
 
+        public async Task<ImmutableList<ECommerce>> MatchFullTextQuery(string categoryName)
+        {
+            var result = await _client.SearchAsync<ECommerce>(s => s.Query
+                                                             (q => q.Match
+                                                             (m => m.Field
+                                                             (f => f.Category)
+                                                             .Query(categoryName))));
+
+            return result.Hits.Select(hit =>
+            {
+                hit.Source!.Id = hit.Id;
+                return hit.Source;
+            }).ToImmutableList();
+
+
+
+
+        }
+
     }
 }

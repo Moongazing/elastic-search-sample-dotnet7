@@ -18,15 +18,15 @@ namespace TunahanAliOzturk.ElasticSearch.API.Services
 
         public async Task<ImmutableList<ECommerce>> TermLevelQueryAsync(string customerFirstName)
         {
-            return await _repository.TermLevelQueryAsync(customerFirstName);    
+            return await _repository.TermLevelQueryAsync(customerFirstName);
         }
         public async Task<ImmutableList<ECommerce>> PrefixLevelQueryAsync(string customerFirstName)
         {
             return await _repository.PrefixLevelQueryAsync(customerFirstName);
         }
-        public async Task<ImmutableList<ECommerce>> RangeLevelQueryAsync(double minPrice,double maxPrice)
+        public async Task<ImmutableList<ECommerce>> RangeLevelQueryAsync(double minPrice, double maxPrice)
         {
-            return await _repository.RangeLevelQueryAsync(minPrice,maxPrice);
+            return await _repository.RangeLevelQueryAsync(minPrice, maxPrice);
         }
         public async Task<ImmutableList<ECommerce>> RangeLevelQueryForDateAsync(DateTime minDate, DateTime maxDate)
         {
@@ -38,7 +38,7 @@ namespace TunahanAliOzturk.ElasticSearch.API.Services
         }
         public async Task<ImmutableList<ECommerce>> Pagination(int page, int pageSize)
         {
-            return await _repository.Pagination(page,pageSize);
+            return await _repository.Pagination(page, pageSize);
         }
         public async Task<ImmutableList<ECommerce>> WilcardLevelQuery(string customerFullName)
         {
@@ -50,6 +50,12 @@ namespace TunahanAliOzturk.ElasticSearch.API.Services
             return await _repository.FuzzyLevelQuery(customerFirstName);
 
         }
+        public async Task<ImmutableList<ECommerce>> MatchFullTextQuery(string categoryName)
+        {
+            return await _repository.MatchFullTextQuery(categoryName);
+        }
+
+
 
     }
 }

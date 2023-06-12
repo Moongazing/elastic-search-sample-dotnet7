@@ -69,6 +69,13 @@ namespace TunahanAliOzturk.ElasticSearch.API.Controllers
             return Ok(result);
         }
 
+        [HttpGet("MatchAllTextQuery")]
+        public async Task<IActionResult> MatchAllTextQuery(string categoryName)
+        {
+            var result = await _service.MatchFullTextQuery(categoryName);
+            return Ok(result);
+        }
+
 
 
 
