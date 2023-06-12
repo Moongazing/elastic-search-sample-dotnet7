@@ -45,6 +45,11 @@ namespace TunahanAliOzturk.ElasticSearch.API.Services
             return await _repository.WilcardLevelQuery(customerFullName);
 
         }
+        public async Task<ImmutableList<ECommerce>> FuzzyLevelQuery(string customerFirstName)
+        {
+            return await _repository.FuzzyLevelQuery(customerFirstName);
+
+        }
 
     }
 }

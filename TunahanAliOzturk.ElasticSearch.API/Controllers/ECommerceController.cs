@@ -32,7 +32,7 @@ namespace TunahanAliOzturk.ElasticSearch.API.Controllers
             return Ok(result);
         }
         [HttpGet("RangeLevelQuery")]
-        public async Task<IActionResult> RangeLevelQuery(double minPrice,double maxPrice)
+        public async Task<IActionResult> RangeLevelQuery(double minPrice, double maxPrice)
         {
             var result = await _service.RangeLevelQueryAsync(minPrice, maxPrice);
             return Ok(result);
@@ -50,9 +50,9 @@ namespace TunahanAliOzturk.ElasticSearch.API.Controllers
             return Ok(result);
         }
         [HttpGet("Pagination")]
-        public async Task<IActionResult> Pagination(int page,int pageSize)
+        public async Task<IActionResult> Pagination(int page, int pageSize)
         {
-            var result = await _service.Pagination(page,pageSize);
+            var result = await _service.Pagination(page, pageSize);
             return Ok(result);
         }
         [HttpGet("WildcardLevelQuery")]
@@ -62,6 +62,12 @@ namespace TunahanAliOzturk.ElasticSearch.API.Controllers
             return Ok(result);
         }
 
+        [HttpGet("FuzzyLevelQuery")]
+        public async Task<IActionResult> FuzzyLevelQuery(string customerFirstName)
+        {
+            var result = await _service.FuzzyLevelQuery(customerFirstName);
+            return Ok(result);
+        }
 
 
 

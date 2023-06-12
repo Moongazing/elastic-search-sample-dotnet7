@@ -101,10 +101,10 @@ namespace TunahanAliOzturk.ElasticSearch.API.Repositories
 
         }
 
-        public async Task<ImmutableList<ECommerce>> Pagination(int page,int pageSize)
+        public async Task<ImmutableList<ECommerce>> Pagination(int page, int pageSize)
         {
 
-            var pageFrom = (page-1)*pageSize;
+            var pageFrom = (page - 1) * pageSize;
 
             var result = await _client.SearchAsync<ECommerce>(s => s.Index(indexName)
                                                                   .Size(pageSize)
@@ -122,12 +122,12 @@ namespace TunahanAliOzturk.ElasticSearch.API.Repositories
         }
         public async Task<ImmutableList<ECommerce>> WilcardLevelQuery(string customerFullName)
         {
-;
+            ;
 
             var result = await _client.SearchAsync<ECommerce>(s => s.Index(indexName)
                                                                   .Query(q => q
-                                                                  .Wildcard(w=>w
-                                                                  .Field(f=>f
+                                                                  .Wildcard(w => w
+                                                                  .Field(f => f
                                                                   .CustomerFullName
                                                                   .Suffix("keyword"))
                                                                   .Wildcard(customerFullName))));
@@ -140,7 +140,30 @@ namespace TunahanAliOzturk.ElasticSearch.API.Repositories
             }).ToImmutableList();
 
         }
+        public async Task<ImmutableList<ECommerce>> FuzzyLevelQuery(string customerFirstName)
+        {
+            var result = await _client.SearchAsync<ECommerce>(s => s.Index(indexName)
+                                                                  .Query(q => q
+                                                                  .Fuzzy(fu => fu
+                                                                  .Field(f => f
+                                                                  .CustomerFirstName
+                                                                  .Suffix("keyword"))
+                                                                  .Value(customerFirstName)
+                                                                  .Fuzziness(new Fuzziness(1))))
+                                                                  .Sort(s => s
+                                                                  .Field(fs => fs
+                                                                  .TaxfulTotalPrice, (new FieldSort()
+                                                                  {
+                                                                      Order = SortOrder.Desc
 
+                                                                  }))));
+
+            return result.Hits.Select(hit =>
+            {
+                hit.Source!.Id = hit.Id;
+                return hit.Source;
+            }).ToImmutableList();
+        }
 
     }
 }
