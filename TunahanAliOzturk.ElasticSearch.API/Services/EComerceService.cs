@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Immutable;
 using System.Net;
 using TunahanAliOzturk.ElasticSearch.API.DTOs;
 using TunahanAliOzturk.ElasticSearch.API.Models.SampleDataModels;
@@ -39,5 +40,11 @@ namespace TunahanAliOzturk.ElasticSearch.API.Services
         {
             return await _repository.Pagination(page,pageSize);
         }
+        public async Task<ImmutableList<ECommerce>> WilcardLevelQuery(string customerFullName)
+        {
+            return await _repository.WilcardLevelQuery(customerFullName);
+
+        }
+
     }
 }

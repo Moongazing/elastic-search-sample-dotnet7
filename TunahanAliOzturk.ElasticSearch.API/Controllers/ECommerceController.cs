@@ -55,6 +55,12 @@ namespace TunahanAliOzturk.ElasticSearch.API.Controllers
             var result = await _service.Pagination(page,pageSize);
             return Ok(result);
         }
+        [HttpGet("WildcardLevelQuery")]
+        public async Task<IActionResult> WildcardLevelQuery(string customerFullName)
+        {
+            var result = await _service.WilcardLevelQuery(customerFullName);
+            return Ok(result);
+        }
 
 
 

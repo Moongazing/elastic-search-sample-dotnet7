@@ -120,6 +120,26 @@ namespace TunahanAliOzturk.ElasticSearch.API.Repositories
             }).ToImmutableList();
 
         }
+        public async Task<ImmutableList<ECommerce>> WilcardLevelQuery(string customerFullName)
+        {
+;
+
+            var result = await _client.SearchAsync<ECommerce>(s => s.Index(indexName)
+                                                                  .Query(q => q
+                                                                  .Wildcard(w=>w
+                                                                  .Field(f=>f
+                                                                  .CustomerFullName
+                                                                  .Suffix("keyword"))
+                                                                  .Wildcard(customerFullName))));
+
+            return result.Hits.Select(hit =>
+            {
+                hit.Source!.Id = hit.Id;
+                return hit.Source;
+
+            }).ToImmutableList();
+
+        }
 
 
     }
