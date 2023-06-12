@@ -19,7 +19,7 @@ namespace TunahanAliOzturk.ElasticSearch.API.Repositories
         {
             // var result = await _client.SearchAsync<ECommerce>(x =>x.Index(indexName).Query(q => q.Term(t => t.Field("customer_first_name.keyword").Value(customerFirstName))));
 
-            //type 
+            //type-cover
             var result = await _client.SearchAsync<ECommerce>(s => s.Index(indexName)
                                                                     .Query(q => q
                                                                     .Term(t => t
@@ -83,16 +83,35 @@ namespace TunahanAliOzturk.ElasticSearch.API.Repositories
             }).ToImmutableList();
 
         }
-        public async Task<ImmutableList<ECommerce>> RangeLevelQuerya(DateTime minDate, DateTime maxDate)
+
+
+        public async Task<ImmutableList<ECommerce>> MatchAllLevelQueryAsync()
         {
             var result = await _client.SearchAsync<ECommerce>(s => s.Index(indexName)
+                                                                  .Size(100)
                                                                   .Query(q => q
-                                                                  .Range(r => r
-                                                                  .DateRange(dr => dr
-                                                                  .Field(f => f
-                                                                  .OrderDate)
-                                                                  .Gte(minDate)
-                                                                  .Lte(maxDate)))));
+                                                                  .MatchAll()));
+
+            return result.Hits.Select(hit =>
+            {
+                hit.Source!.Id = hit.Id;
+                return hit.Source;
+
+            }).ToImmutableList();
+
+        }
+
+        public async Task<ImmutableList<ECommerce>> Pagination(int page,int pageSize)
+        {
+
+            var pageFrom = (page-1)*pageSize;
+
+            var result = await _client.SearchAsync<ECommerce>(s => s.Index(indexName)
+                                                                  .Size(pageSize)
+                                                                  .From(pageFrom)
+                                                                  .Query(q => q
+                                                                  .MatchAll()));
+
             return result.Hits.Select(hit =>
             {
                 hit.Source!.Id = hit.Id;

@@ -43,6 +43,18 @@ namespace TunahanAliOzturk.ElasticSearch.API.Controllers
             var result = await _service.RangeLevelQueryForDateAsync(minDate, maxDate);
             return Ok(result);
         }
+        [HttpGet("MatchAllLevelQuery")]
+        public async Task<IActionResult> MatchAllLevelQuery()
+        {
+            var result = await _service.MatchAllLevelQueryAsync();
+            return Ok(result);
+        }
+        [HttpGet("Pagination")]
+        public async Task<IActionResult> Pagination(int page,int pageSize)
+        {
+            var result = await _service.Pagination(page,pageSize);
+            return Ok(result);
+        }
 
 
 
